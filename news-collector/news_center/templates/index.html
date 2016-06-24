@@ -1,0 +1,195 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>明知</title>
+  <meta name="description" content="在这里知道明天的事">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <link rel="icon" type="image/png" href="assets/amazeui/i/favicon.png">
+  <link rel="stylesheet" href="assets/amazeui/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/amazeui/css/app.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 不提供支持。 请 <a
+  href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<script type="text/x-handlebars-template" id="amz-tpl">
+  {% templatetag openvariable %}>header header{% templatetag closevariable %}
+
+  {% templatetag openvariable %}>menu menu{% templatetag closevariable %}
+
+  {% templatetag openvariable %}>slider slider{% templatetag closevariable %}
+
+  {% templatetag openvariable %}>list_news list1{% templatetag closevariable %}
+
+  {% templatetag openvariable %}>gallery gallery{% templatetag closevariable %}
+
+  {% templatetag openvariable %}>list_news list2{% templatetag closevariable %}
+
+  {% templatetag openvariable %}>navbar navbar{% templatetag closevariable %}
+</script>
+
+<script src="assets/amazeui/js/jquery.min.js"></script>
+<script src="assets/amazeui/js/amazeui.js"></script>
+<script src="assets/amazeui/js/handlebars.min.js"></script>
+<script src="assets/amazeui/js/amazeui.widgets.helper.js"></script>
+<script>
+  var $tpl = $('#amz-tpl');
+  var source = $tpl.text();
+  var template = Handlebars.compile(source);
+  var data = {
+    header: {
+      "content": {
+        "title": "明知"
+      }
+    },
+
+    menu: {
+      "options": {
+        "cols": "1"
+      },
+      "content": [
+        {
+          "link": "##",
+          "title": "互联网",
+        },
+        {
+          "link": "##",
+          "title": "体育",
+        },
+        {
+          "link": "##",
+          "title": "娱乐",
+        },
+        {
+          "link": "##",
+          "title": "房产",
+        },
+        {
+          "link": "##",
+          "title": "汽车"
+        },
+        {
+          "link": "##",
+          "title": "时尚"
+        }
+      ],
+      "theme": "offcanvas1"
+    },
+
+
+
+    slider: {
+      "theme": "a2",
+      //"sliderConfig": "{\"directionNav\":false}",
+      "content": [
+        {
+          "img": "http://s.amazeui.org/media/i/demos/bing-1.jpg"
+        },
+        {
+          "img": "http://s.amazeui.org/media/i/demos/bing-2.jpg"
+        },
+        {
+          "img": "http://s.amazeui.org/media/i/demos/bing-3.jpg"
+        },
+        {
+          "img": "http://s.amazeui.org/media/i/demos/bing-4.jpg"
+        }
+      ]
+    },
+
+    list1: {
+      "options": {
+        "type": "thumb",
+        "thumbPosition": "left"
+      },
+      "content": {
+        "header": {
+          "title": "明天早知道",
+          "link": "{% url 'newslist' %}",
+          "moreText": "更多 >>",
+          "morePosition": "top"
+        },
+        "main": {% autoescape off %}
+                  {{ main }}
+                {% endautoescape %}
+      }
+    },
+
+    gallery: {
+      "options": {
+        "cols": 2,
+        "gallery": true
+      },
+      "content":
+                {% autoescape off %}
+                  {{ main_pic_news }}
+                {% endautoescape %}
+  
+    },
+
+    list2: {
+      "content": {
+        "header": {
+          "title": "明天推荐",
+          "link": "{% url 'newslist' %}",
+          "moreText": "更多 >>",
+          "morePosition": "top"
+        },
+        "main": 
+                {% autoescape off %}
+                  {{ no_pic_main }}
+                {% endautoescape %}
+      }
+    },
+
+
+    navbar: {
+      "options": {
+        "cols": "3",
+        "iconpos": "top"
+      },
+      "content": [
+        {
+          "title": "一键分享",
+          "link": "",
+          "icon": "share-square-o",
+          "dataApi": "data-am-navbar-share"
+        },
+        {
+          "title": "二维码",
+          "link": "",
+          "icon": "qrcode",
+          "dataApi": "data-am-navbar-qrcode"
+        },
+        {
+          "title": "关于我们",
+          "link": "",
+          "icon": "user-md",
+          "dataApi": ""
+        },
+      ]
+    }
+  };
+  var html = template(data);
+
+  $tpl.before(html);
+
+  /*
+  // 如果 Handlebars 渲染出来的 HTML 在 DOM ready 事件之后插入文档，需要手动初始化组件
+   $.each(['slider', 'menu', 'gallery', 'footer', 'navbar'], function(i, m) {
+     var module = $.AMUI[m];
+     module && module.init && module.init();
+   })
+   */
+</script>
+</body>
+</html>
