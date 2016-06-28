@@ -1,0 +1,41 @@
+# coding: utf8
+import scrapy
+import news_spider
+# from news_spiders.base.baseSpider import BaseSpider
+
+
+class NewsSpider(scrapy.spiders.Spider, BaseSpider):
+    name = "news"
+    # 定义spider名字的字符串(string)。spider的名字定义了Scrapy如何定位(并初始化)spider，
+    # 所以其必须是唯一的。
+    # 不过您可以生成多个相同的spider实例(instance)，这没有任何限制。
+    # name是spider最重要的属性，而且是必须的。
+    # 如果该spider爬取单个网站(single domain)，一个常见的做法是以该网站(domain)(加或不加 后缀)来命名
+    # spider。 例如，如果spider爬取 mywebsite.com ，该spider通常会被命名为
+
+    start_urls = [
+        "http://180.149.132.136/sn/api/searchnews",
+    ]
+    # URL列表。当没有制定特定的URL时，spider将从该列表中开始进行爬取。
+    # 因此，第一个被获取到的页面的URL将是该列表之一。
+    # 后续的URL将会从获取到的数据中提取。
+
+    # def start_requests():
+    #     '''
+    #     该方法必须返回一个可迭代对象(iterable)。该对象包含了spider用于爬取的第一个Request。
+    #     当spider启动爬取并且未制定URL时，该方法被调用。
+    #     当指定了URL时，make_requests_from_url() 将被调用来创建Request对象。
+    #     该方法仅仅会被Scrapy调用一次，因此您可以将其实现为生成器。
+    #     该方法的默认实现是使用 start_urls 的url生成Request。
+    #     '''
+    #     pass
+
+    def make_requests_from_url(self, url):
+        data = {}
+        data['pn'] = '1'
+        data['word'] = self.tomorrowStr.encode("utf8")
+        return scrapy.FormRequest(url,
+                                  formdata=data)
+
+    def parse(self, response):
+        print response
