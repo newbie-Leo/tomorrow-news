@@ -1,10 +1,13 @@
 # coding: utf8
+import json
+from datetime import datetime
 import scrapy
-import news_spider
-# from news_spiders.base.baseSpider import BaseSpider
+from news_spiders.base.baseSpider import BaseSpider
+from scrapy_spider.items import ScrapySpiderItem
 
 
 class NewsSpider(scrapy.spiders.Spider, BaseSpider):
+    page = 1
     name = "news"
     # 定义spider名字的字符串(string)。spider的名字定义了Scrapy如何定位(并初始化)spider，
     # 所以其必须是唯一的。
@@ -16,6 +19,8 @@ class NewsSpider(scrapy.spiders.Spider, BaseSpider):
     start_urls = [
         "http://180.149.132.136/sn/api/searchnews",
     ]
+
+    items = []
     # URL列表。当没有制定特定的URL时，spider将从该列表中开始进行爬取。
     # 因此，第一个被获取到的页面的URL将是该列表之一。
     # 后续的URL将会从获取到的数据中提取。
@@ -31,11 +36,43 @@ class NewsSpider(scrapy.spiders.Spider, BaseSpider):
     #     pass
 
     def make_requests_from_url(self, url):
-        data = {}
-        data['pn'] = '1'
-        data['word'] = self.tomorrowStr.encode("utf8")
         return scrapy.FormRequest(url,
-                                  formdata=data)
+                                  formdata=self.__make_params(),
+                                  method='GET')
+
+    def __make_params(self):
+        data = {}
+        data['pn'] = str(self.page)
+        data['word'] = self.tomorrowStr.encode("utf8")
+        return data
 
     def parse(self, response):
-        print response
+        body = json.loads(response.body)
+        hasmore = body['data']['hasmore']
+        news = body['data']['news']
+        for i in news:
+            item = self.__make_item(i)
+            self.items.append(item)
+
+        if(self.page < 10 and hasmore):
+            self.page = self.page + 1
+            yield self.make_requests_from_url(
+                self.start_urls[0])
+        else:
+            for i in self.items:
+                yield i
+
+    def __make_item(self, i):
+        title = i['title']
+        url = i['url']
+        nid = i['nid']
+        site = i['site']
+        ts = datetime.fromtimestamp(float(i['ts']) / 1000)
+        imageurls = json.dumps(i['imageurls'])
+        n_abs = i['abs']
+        n_date = datetime.now()
+
+        item = ScrapySpiderItem(title=title, url=url, nid=nid, site=site,
+                                ts=ts, imageurls=imageurls, n_abs=n_abs,
+                                n_date=n_date)
+        return item
