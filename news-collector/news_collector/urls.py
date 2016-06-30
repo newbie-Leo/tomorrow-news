@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
+
 admin.autodiscover()
 urlpatterns = patterns('',
                        # Examples:
@@ -10,4 +12,5 @@ urlpatterns = patterns('',
                        url(r'^index$', 'news_center.views.index', name='index'),
                        url(r'^img$', 'news_center.views.img', name='img'),
                        url(r'^newslist$', 'news_center.views.newsList', name='newslist'),
+                       url(r'^$', RedirectView.as_view(pattern_name='index')),
                        )

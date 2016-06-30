@@ -6,6 +6,7 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from news_center.models import News
 
 
 class ScrapySpiderItem(scrapy.Item):
@@ -20,3 +21,6 @@ class ScrapySpiderItem(scrapy.Item):
     imageurls = scrapy.Field()
     n_abs = scrapy.Field()
     n_date = scrapy.Field()
+
+    def saveModel(self):
+        News.objects.create(**dict(self))

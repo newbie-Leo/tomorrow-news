@@ -6,6 +6,17 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
-class ScrapySpiderPipeline(object):
+class DuplicatesTitlePipeline(object):
+    __titles = []
+
     def process_item(self, item, spider):
+        if not item['title'] in self.__titles:
+            self.__titles.append(item['title'])
+            return item
+
+
+class SaveModelPipeline(object):
+
+    def process_item(self, item, spider):
+        item.saveModel()
         return item
