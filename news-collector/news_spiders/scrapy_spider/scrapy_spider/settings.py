@@ -66,6 +66,7 @@ NEWSPIDER_MODULE = 'scrapy_spider.spiders'
 ITEM_PIPELINES = {
     'scrapy_spider.pipelines.DuplicatesTitlePipeline': 1,
     'scrapy_spider.pipelines.SaveModelPipeline': 2,
+    'scrapy_spider.pipelines.GetContentPipeline': 3
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -4,6 +4,10 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+from goose import Goose
+from goose.text import StopWordsChinese
+from lxml import etree
+from news_center.models import NewsContent
 
 
 class DuplicatesTitlePipeline(object):
@@ -18,5 +22,37 @@ class DuplicatesTitlePipeline(object):
 class SaveModelPipeline(object):
 
     def process_item(self, item, spider):
-        item.saveModel()
-        return item
+        if item:
+            dbitem = item.saveModel()
+            return dbitem
+
+
+class GetContentPipeline(object):
+    goose = Goose({'stopwords_class': StopWordsChinese})
+
+    def process_item(self, item, spider):
+        if item:
+            url = item.url
+            new_content = NewsContent()
+            new_content.news = item
+            article = GetContentPipeline.goose.extract(url=url)
+
+            if (not article) or not (article.top_node):
+                item.delete()
+                return item
+            text = article.top_node.text_content()
+            if not text:
+                item.delete()
+                return item
+
+            content = etree.tostring(article.top_node)
+            new_content.content = content
+            try:
+                img = article.top_image.src
+                new_content.content_img = img
+                movie = article.movies[0].src
+                new_content.movie = movie
+            except:
+                pass
+            new_content.save()
+            return item

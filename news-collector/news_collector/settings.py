@@ -25,7 +25,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.253.1']
 
 
 # Application definition
@@ -92,6 +92,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/assets/'
+PROJ_HOME = os.path.dirname(os.path.realpath(__file__))
+print os.path.join(PROJ_HOME, 'templates')
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': ['/cygdrive/c/Users/liurunze/Desktop/tomorrow-news/news-collector/news_center/templates'],
+        'APP_DIRS': False,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages'
+            ]
+        },
+    },
+]
 
 
 STATICFILES_FINDERS = [
@@ -108,3 +125,5 @@ NEWS_SPIDER = ''
 # 配置分类器
 # 匪类器在news_classifiers/{{classifier}}下实现， 必须继承 news_classifiers.base.BaseClassifier并实现方法
 NEWS_CLASSIFIER = ''
+
+DICT_PATH = '/cygdrive/c/Users/liurunze/Desktop/tomorrow-news/news-collector/news_classifiers/textGroceryClassifier/dict'

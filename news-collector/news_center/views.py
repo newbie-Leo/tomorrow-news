@@ -1,7 +1,8 @@
-# coding: utf8
+#coding: utf8
 import json
 import requests
 from django.shortcuts import render_to_response
+from django.template.response import TemplateResponse
 from django.http import HttpResponse
 from news_center.models import News
 from util import translateImg, translateTitle
@@ -14,12 +15,12 @@ def index(request):
     main = json.dumps([
         {
             'title': translateTitle(i.title),
-            'link': i.url,
+            'link': '/news?id=%s' % i.id,
             'img': translateImg(
                 json.loads(
                     i.imageurls
                 )[0]['url']),
-            'desc': i.n_abs
+            'desc': u'【%s】%s' % (i.site, i.n_abs)
         }
 
         for i in main_news
@@ -29,7 +30,7 @@ def index(request):
     main_pic_news = json.dumps([
         {
             'title': translateTitle(i.title),
-            'link': i.url,
+            'link': '/news?id=%s' % i.id,
             'img': translateImg(
                 json.loads(
                     i.imageurls
@@ -44,8 +45,9 @@ def index(request):
     no_pic_main = json.dumps([
         {
             'title': translateTitle(i.title),
-            'link': i.url,
-            'date': i.ts.strftime('%Y-%m-%d')
+            'link': '/news?id=%s' % i.id,
+            # 'date': i.ts.strftime('%Y-%m-%d'),
+            'date': i.site
         }
 
         for i in no_pic_news
@@ -68,7 +70,7 @@ def newsList(request):
     news = [
         {
             'title': translateTitle(i.title),
-            'link': i.url,
+            'link': '/news?id=%s' % i.id,
             'desc': i.n_abs,
             'id': i.id
         }
@@ -82,9 +84,15 @@ def newsList(request):
     return HttpResponse(js)
 
 
+def news(request):
+    newsid = request.GET.get('id')
+    new = News.objects.get(id=newsid)
+    return TemplateResponse(request, "new.html", {"new": new})
+
+
 def img(request):
     url = request.GET.get('url')
-    headers = {'Referer': 'http://www.baidu.com/'}
+    headers = {'Referer': url}
     response = requests.get(url, headers=headers)
 
     res = HttpResponse(response.content)

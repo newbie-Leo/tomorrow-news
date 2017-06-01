@@ -1,7 +1,7 @@
 # coding: utf8
 from django.db import models
 from datetime import datetime
-
+from util import translateImg
 # Create your models here.
 
 
@@ -50,3 +50,19 @@ class News(models.Model):
             start: start + count]
         count = cls.objects.all().count()
         return news, count
+
+
+class NewsContent(models.Model):
+    news = models.OneToOneField(News, related_name='news_content')
+    content = models.TextField(u'内容', null=True)
+    content_img = models.CharField(u'内容图片', max_length=512, null=True)
+    content_movie = models.CharField(u'视频', max_length=512, null=True)
+
+    @property
+    def jump_img(self):
+        return translateImg(self.content_img)
+
+    class Meta:
+        db_table = 'news_content'
+        verbose_name_plural = u"新闻内容"
+        verbose_name = u"新闻内容"

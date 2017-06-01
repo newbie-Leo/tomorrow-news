@@ -1,0 +1,54 @@
+<!doctype html>
+<!--[if lte IE 9]><html class="lte9 no-js demo"><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js demo"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+  <meta name="renderer" content="webkit">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="assets/amazeui/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/amazeui/css/app.css">
+</head>
+<body >
+
+<div class="page pg-demo">
+<header data-am-widget="header"
+          class="am-header am-header-default">
+      <div class="am-header-left am-header-nav">
+        <a href="{% url 'index' %}" class="">
+            <i class="am-header-icon am-icon-home"></i>
+        </a>
+      </div>
+      <h1 class="am-header-title">
+          <a href="#title-link" class="">
+            明知
+          </a>
+      </h1>
+  </header>
+  
+  <div id="demo-view" data-backend-compiled>
+        
+      <article data-am-widget="paragraph"
+           class="am-paragraph am-paragraph-default"
+           data-am-paragraph="{ tableScrollable: true, pureview: true }">
+        <h3 style="margin-top: 10px" class="am-article-title">{{ new.title }}</h3>
+        <p style="margin-top: 10px" class="am-article-meta">{{ new.site }} 
+            <a href="{{ new.url }}">阅读原文</a>
+        </p>
+    {% if new.news_content.content_img %}
+      <img src={{ new.news_content.jump_img }}><p class=paragraph-default-p>
+    {% endif %}
+      <p>{{ new.news_content.content| safe }}</p>
+  </article>
+
+  </div>
+</div>
+</body>
+</html>
+
+<!-- Cached page generated on Fri Nov 18 2016 07:18:49 GMT+0000 (UTC) -->

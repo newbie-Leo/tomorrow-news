@@ -6,6 +6,8 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+import django
+django.setup()
 from news_center.models import News
 
 
@@ -23,4 +25,4 @@ class ScrapySpiderItem(scrapy.Item):
     n_date = scrapy.Field()
 
     def saveModel(self):
-        News.objects.create(**dict(self))
+        return News.objects.create(**dict(self))

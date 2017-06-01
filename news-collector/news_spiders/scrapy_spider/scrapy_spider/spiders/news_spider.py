@@ -1,12 +1,11 @@
 # coding: utf8
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import scrapy
-from news_spiders.base.baseSpider import BaseSpider
 from scrapy_spider.items import ScrapySpiderItem
 
 
-class NewsSpider(scrapy.spiders.Spider, BaseSpider):
+class NewsSpider(scrapy.spiders.Spider):
     page = 1
     name = "news"
     # 定义spider名字的字符串(string)。spider的名字定义了Scrapy如何定位(并初始化)spider，
@@ -17,7 +16,7 @@ class NewsSpider(scrapy.spiders.Spider, BaseSpider):
     # spider。 例如，如果spider爬取 mywebsite.com ，该spider通常会被命名为
 
     start_urls = [
-        "http://180.149.132.136/sn/api/searchnews",
+        "http://api.baiyue.baidu.com/sn/api/searchnews",
     ]
 
     items = []
@@ -40,6 +39,14 @@ class NewsSpider(scrapy.spiders.Spider, BaseSpider):
                                   formdata=self.__make_params(),
                                   method='GET')
 
+    @property
+    def tomorrowStr(self):
+        today = datetime.today()
+        tomorrow = today + timedelta(days=1)
+        month = tomorrow.month
+        day = tomorrow.day
+        return u'%s月%s日' % (month, day)
+
     def __make_params(self):
         data = {}
         data['pn'] = str(self.page)
@@ -54,7 +61,7 @@ class NewsSpider(scrapy.spiders.Spider, BaseSpider):
             item = self.__make_item(i)
             self.items.append(item)
 
-        if(self.page < 10 and hasmore):
+        if(self.page < 2 and hasmore):
             self.page = self.page + 1
             yield self.make_requests_from_url(
                 self.start_urls[0])

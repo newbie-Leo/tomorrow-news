@@ -90,7 +90,7 @@
 <script type="text/x-handlebars-template" id="tpi-list-item">
   {% templatetag openvariable %}#each this{% templatetag closevariable %}
   <li class="am-list-item-desced" data-id="{% templatetag openvariable %}id{% templatetag closevariable %}</a>">
-    <a href="{% templatetag openvariable %}link{% templatetag closevariable %}" class="am-list-item-hd" target="_blank">
+    <a class="needClick" href="{% templatetag openvariable %}link{% templatetag closevariable %}" class="am-list-item-hd" target="_blank">
     {% templatetag openvariable %}title{% templatetag closevariable %}</a>
 
     <div class="am-list-item-text">{% templatetag openvariable %}desc{% templatetag closevariable %}</div>
@@ -147,6 +147,12 @@
           setTimeout(function() {
             _this.iScroll.refresh();
           }, 100);
+
+          console.log($(".needClick"));
+          $(".needClick").click(function(){
+              var url = $(this).attr("href");
+              location.href=url;
+          });
         }, function() {
           console.log('Error...')
         }).always(function() {
@@ -234,10 +240,14 @@
       app.init();
     });
 
+
     document.addEventListener('touchmove', function(e) {
       e.preventDefault();
     }, false);
+
+
   })(window.jQuery);
+
 </script>
 </body>
 </html>
