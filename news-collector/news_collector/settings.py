@@ -25,7 +25,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.253.1']
+ALLOWED_HOSTS = ['192.168.253.1', '127.0.0.1']
 
 
 # Application definition
@@ -118,12 +118,8 @@ STATICFILES_FINDERS = [
 
 # news_collector
 
-# 配置爬虫类
-# 爬虫类在news_spiders/{{spidername}}下实现，必须继承 news_spiders.base.BaseSpider并实现方法
 NEWS_SPIDER = ''
 
-# 配置分类器
-# 匪类器在news_classifiers/{{classifier}}下实现， 必须继承 news_classifiers.base.BaseClassifier并实现方法
 NEWS_CLASSIFIER = ''
 
 DICT_PATH = '/cygdrive/c/Users/liurunze/Desktop/tomorrow-news/news-collector/news_classifiers/textGroceryClassifier/dict'

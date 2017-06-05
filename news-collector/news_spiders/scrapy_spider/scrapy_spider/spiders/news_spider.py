@@ -61,7 +61,7 @@ class NewsSpider(scrapy.spiders.Spider):
             item = self.__make_item(i)
             self.items.append(item)
 
-        if(self.page < 2 and hasmore):
+        if(self.page < 50 and hasmore):
             self.page = self.page + 1
             yield self.make_requests_from_url(
                 self.start_urls[0])

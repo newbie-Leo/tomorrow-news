@@ -3,16 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>明知</title>
-  <meta name="description" content="在这里知道明天的事">
-  <meta name="keywords" content="">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <link rel="icon" type="image/png" href="assets/amazeui/i/favicon.png">
-  <link rel="stylesheet" href="assets/amazeui/css/amazeui.min.css">
-  <link rel="stylesheet" href="assets/amazeui/css/app.css">
+  <meta name="renderer" content="webkit">
+  <title></title>
+  <meta name="description" content="在这里知道明天的事">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="assets/amazeui/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/amazeui/css/app.css">
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -23,10 +22,6 @@
 
 <script type="text/x-handlebars-template" id="amz-tpl">
   {% templatetag openvariable %}>header header{% templatetag closevariable %}
-
-  {% templatetag openvariable %}>menu menu{% templatetag closevariable %}
-
-  {% templatetag openvariable %}>slider slider{% templatetag closevariable %}
 
   {% templatetag openvariable %}>list_news list1{% templatetag closevariable %}
 
@@ -90,20 +85,9 @@
     slider: {
       "theme": "a2",
       //"sliderConfig": "{\"directionNav\":false}",
-      "content": [
-        {
-          "img": "http://s.amazeui.org/media/i/demos/bing-1.jpg"
-        },
-        {
-          "img": "http://s.amazeui.org/media/i/demos/bing-2.jpg"
-        },
-        {
-          "img": "http://s.amazeui.org/media/i/demos/bing-3.jpg"
-        },
-        {
-          "img": "http://s.amazeui.org/media/i/demos/bing-4.jpg"
-        }
-      ]
+      "content": {% autoescape off %}
+                  {{ slideshows }}
+                {% endautoescape %}
     },
 
     list1: {
@@ -158,12 +142,6 @@
         "iconpos": "top"
       },
       "content": [
-        {
-          "title": "一键分享",
-          "link": "",
-          "icon": "share-square-o",
-          "dataApi": "data-am-navbar-share"
-        },
         {
           "title": "二维码",
           "link": "",

@@ -28,20 +28,20 @@ class News(models.Model):
     def getMainNews(cls):
         # TODO 筛选头条新闻（有图）
         news = cls.objects.filter(
-            n_date=datetime.today()).exclude(imageurls='[]')[0:4]
+            n_date=datetime.today()).exclude(imageurls='[]')[0:9]
         return news
 
     @classmethod
     def getPicMainNews(cls):
         # TODO 筛选头条新闻（有图）
         news = cls.objects.filter(
-            n_date=datetime.today()).exclude(imageurls='[]')[4:8]
+            n_date=datetime.today()).exclude(imageurls='[]')[9:13]
         return news
 
     @classmethod
     def getNoPicMainNews(cls):
         # TODO 筛选头条新闻（无图）
-        news = cls.objects.filter(n_date=datetime.today(), imageurls='[]')[0:4]
+        news = cls.objects.filter(n_date=datetime.today(), imageurls='[]')[0:9]
         return news
 
     @classmethod
@@ -50,6 +50,12 @@ class News(models.Model):
             start: start + count]
         count = cls.objects.all().count()
         return news, count
+
+    @classmethod
+    def getSlideshow(cls):
+        slideshows = NewsContent.objects.select_related().filter(
+            content_img__isnull=False, news__n_date=datetime.today())[0:4]
+        return [c.news for c in slideshows]
 
 
 class NewsContent(models.Model):

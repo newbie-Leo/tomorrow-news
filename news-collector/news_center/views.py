@@ -1,4 +1,4 @@
-#coding: utf8
+# coding: utf8
 import json
 import requests
 from django.shortcuts import render_to_response
@@ -46,15 +46,27 @@ def index(request):
         {
             'title': translateTitle(i.title),
             'link': '/news?id=%s' % i.id,
-            # 'date': i.ts.strftime('%Y-%m-%d'),
             'date': i.site
         }
 
         for i in no_pic_news
     ])
 
-    data = {'main': main, 'main_pic_news': main_pic_news,
-            'no_pic_main': no_pic_main}
+    slideshows = News.getSlideshow()
+    slideshows = json.dumps([
+        {
+            "img": i.news_content.content_img,
+            "link": i.url,
+            "title": i.title
+        }
+
+        for i in slideshows
+    ])
+
+    data = {'main': main,
+            'main_pic_news': main_pic_news,
+            'no_pic_main': no_pic_main,
+            'slideshows': slideshows}
     return render_to_response('index.html', data)
 
 
