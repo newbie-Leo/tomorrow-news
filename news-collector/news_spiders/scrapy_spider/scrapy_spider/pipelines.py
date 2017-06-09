@@ -7,6 +7,7 @@
 from goose import Goose
 from goose.text import StopWordsChinese
 from lxml import etree
+from scrapy.exceptions import DropItem
 from news_center.models import NewsContent
 
 
@@ -17,6 +18,8 @@ class DuplicatesTitlePipeline(object):
         if not item['title'] in self.__titles:
             self.__titles.append(item['title'])
             return item
+        else:
+            raise DropItem(u"标题重复 %s" % item)
 
 
 class SaveModelPipeline(object):
@@ -39,11 +42,11 @@ class GetContentPipeline(object):
 
             if (not article) or not (article.top_node):
                 item.delete()
-                return item
+                raise DropItem(u"无法获取内容 %s" % item)
             text = article.top_node.text_content()
             if not text:
                 item.delete()
-                return item
+                raise DropItem(u"无法获取内容 %s" % item)
 
             content = etree.tostring(article.top_node)
             new_content.content = content
