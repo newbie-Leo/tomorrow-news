@@ -44,6 +44,12 @@
       <img src={{ new.news_content.jump_img }}><p class=paragraph-default-p>
     {% endif %}
       <p>{{ new.news_content.content| safe }}</p>
+      <blockquote>
+        <p>文章来自：{{ new.site }}</p>
+        <p>感谢阅读，内容不完善或不准确请点击<i class="am-icon-hand-o-down"></i> <p>
+          <p><a href="{{ new.url }}">阅读原文</a></p>
+        <p>谢谢支持</p>
+      </blockquote>
   </article>
 
   </div>
@@ -52,3 +58,5 @@
 </html>
 
 <!-- Cached page generated on Fri Nov 18 2016 07:18:49 GMT+0000 (UTC) -->
+
+

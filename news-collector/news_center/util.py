@@ -14,8 +14,13 @@ def translateTitle(title):
     tomorrow = today + timedelta(days=1)
     month = tomorrow.month
     day = tomorrow.day
-    tomorrow = u'%s月%s日' % (month, day)
-    return title.replace(tomorrow, u"明天")
+    tomorrow_normal = u'%s月%s日' % (month, day)
+    tomorrow_abnormal = tomorrow.strftime("%m月%d日").decode("utf8")
+
+    if tomorrow_abnormal in title:
+        return title.replace(tomorrow_abnormal, u"明天")
+    else:
+        return title.replace(tomorrow_normal, u"明天")
 
 
 def newsQuerySetToJson(news):
