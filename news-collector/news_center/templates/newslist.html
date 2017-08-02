@@ -55,12 +55,65 @@
   </style>
 </head>
 <body>
+    <input type="hidden" id="b_type" value="{{ b_type }}"/>
 <div class="page">
-  <header data-am-widget="header" class="am-header am-header-default">
-    <h1 class="am-header-title">
-      明知
-    </h1>
+  <header data-am-widget="header"
+          class="am-header am-header-default">
+      <div class="am-header-left am-header-nav">
+          <a href="#left-link" class="">
+                <i class="am-header-icon am-icon-home"></i>
+          </a>
+      </div>
+
+      <h1 class="am-header-title">
+          <a href="#title-link" class="">
+            明知
+          </a>
+      </h1>
   </header>
+   <nav data-am-widget="menu" class="am-menu  am-menu-offcanvas1"  
+     data-am-menu-offcanvas
+    > 
+    <a href="javascript: void(0)" class="am-menu-toggle">
+          <i class="am-menu-toggle-icon am-icon-bars"></i>
+    </a>
+
+    <div class="am-offcanvas" >
+      <div class="am-offcanvas-bar am-offcanvas-bar-flip">
+
+      <ul class="am-menu-nav am-avg-sm-1">
+          <li class="">
+            <a href="{% url 'newslist' %}?" class="" >全部</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=1" class="" >互联网</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=2" class="" >体育</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=3" class="" >娱乐</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=4" class="" >房产</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=5" class="" >汽车</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=6" class="" >财经</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=7" class="" >游戏</a>
+          </li>
+          <li class="">
+            <a href="{% url 'newslist' %}?b_type=8" class="" >教育</a>
+          </li>
+      </ul>
+
+      </div>
+    </div>
+  </nav>
 
   <div id="wrapper" data-am-widget="list_news"
        class="am-list-news am-list-news-default">
@@ -90,7 +143,7 @@
 <script type="text/x-handlebars-template" id="tpi-list-item">
   {% templatetag openvariable %}#each this{% templatetag closevariable %}
   <li class="am-list-item-desced" data-id="{% templatetag openvariable %}id{% templatetag closevariable %}</a>">
-    <a class="needClick" href="{% templatetag openvariable %}link{% templatetag closevariable %}" class="am-list-item-hd" target="_blank">
+    <a class="needClick" href="{% templatetag openvariable %}link{% templatetag closevariable %}" class="am-list-item-hd" target="view_window">
     {% templatetag openvariable %}title{% templatetag closevariable %}</a>
 
     <div class="am-list-item-text">{% templatetag openvariable %}desc{% templatetag closevariable %}</div>
@@ -114,6 +167,7 @@
 
       this.getURL = function(params) {
         var queries = ['callback=?'];
+        var b_type = $("#b_type").val();
         for (var key in  params) {
           if (key !== 'start') {
             queries.push(key + '=' + params[key]);
@@ -151,7 +205,10 @@
           console.log($(".needClick"));
           $(".needClick").click(function(){
               var url = $(this).attr("href");
-              location.href=url;
+              // location.target="view_window";
+              // location.href=url;
+              window.open(url);
+
           });
         }, function() {
           console.log('Error...')
@@ -181,6 +238,7 @@
         var pullStart;
 
         this.URL = this.getURL(options.params);
+        console.log(this.URL);
         this.renderList(options.params.start);
 
         myScroll.on('scrollStart', function() {
@@ -230,11 +288,13 @@
     };
 
     $(function() {
+      var b_type = $("#b_type").val();
       var app = new EventsList(null, {
         api: '{% url 'newslist' %}',
         params: {
           start: 0,
           count: 10,
+          b_type: b_type
         }
       });
       app.init();

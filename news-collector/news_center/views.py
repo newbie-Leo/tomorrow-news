@@ -11,7 +11,7 @@ from util import translateImg, translateTitle
 
 def index(request):
     # 获取有图头条
-    main_news = News.getMainNews()
+    main_news = News.getMainNews(request)
     main = json.dumps([
         {
             'title': translateTitle(i.title),
@@ -26,7 +26,7 @@ def index(request):
         for i in main_news
     ])
 
-    main_pic_news = News.getPicMainNews()
+    main_pic_news = News.getPicMainNews(request)
     main_pic_news = json.dumps([
         {
             'title': translateTitle(i.title),
@@ -41,7 +41,7 @@ def index(request):
     ])
 
     # 获取无图头条
-    no_pic_news = News.getNoPicMainNews()
+    no_pic_news = News.getNoPicMainNews(request)
     no_pic_main = json.dumps([
         {
             'title': translateTitle(i.title),
@@ -72,12 +72,14 @@ def index(request):
 
 def newsList(request):
     if not request.GET.get('callback'):
-        return render_to_response('newslist.html')
+        data = {"b_type":
+                request.GET.get("b_type", "")}
+        return render_to_response('newslist.html', data)
     callback = request.GET.get('callback')
     start = int(request.GET.get('start'))
     count = int(request.GET.get('count'))
 
-    news, total = News.getNewsList(start=start, count=count)
+    news, total, start = News.getNewsList(request, start=start, count=count)
 
     news = [
         {

@@ -9,6 +9,8 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 import os
+import sys
+sys.path.append('/cygdrive/c/Users/liurunze/Desktop/tomorrow-news/news-collector')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_collector.settings")
 
 BOT_NAME = 'scrapy_spider'

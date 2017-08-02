@@ -8,7 +8,7 @@ from goose import Goose
 from goose.text import StopWordsChinese
 from lxml import etree
 from scrapy.exceptions import DropItem
-from news_center.models import NewsContent
+from news_center.models import NewsContent, NewsSite
 
 
 class DuplicatesTitlePipeline(object):
@@ -26,6 +26,9 @@ class SaveModelPipeline(object):
 
     def process_item(self, item, spider):
         if item:
+            media_name = item['site']
+            item_media, _ = NewsSite.objects.get_or_create(site_name=media_name)
+            item['b_type'] = item_media.site_type
             dbitem = item.saveModel()
             return dbitem
 

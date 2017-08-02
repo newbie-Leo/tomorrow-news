@@ -23,6 +23,8 @@
 <script type="text/x-handlebars-template" id="amz-tpl">
   {% templatetag openvariable %}>header header{% templatetag closevariable %}
 
+  {% templatetag openvariable %}>menu menu{% templatetag closevariable %}
+
   {% templatetag openvariable %}>list_news list1{% templatetag closevariable %}
 
   {% templatetag openvariable %}>gallery gallery{% templatetag closevariable %}
@@ -51,30 +53,39 @@
       "options": {
         "cols": "1"
       },
+
       "content": [
         {
-          "link": "##",
+          "link": "{% url 'newslist' %}?b_type=1",
           "title": "互联网",
         },
         {
-          "link": "##",
+          "link": "{% url 'newslist' %}?b_type=2",
           "title": "体育",
         },
         {
-          "link": "##",
+          "link": "{% url 'newslist' %}?b_type=3",
           "title": "娱乐",
         },
         {
-          "link": "##",
+          "link": "{% url 'newslist' %}?b_type=4",
           "title": "房产",
         },
         {
-          "link": "##",
+          "link": "{% url 'newslist' %}?b_type=5",
           "title": "汽车"
         },
         {
-          "link": "##",
-          "title": "时尚"
+          "link": "{% url 'newslist' %}?b_type=7",
+          "title": "财经"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=8",
+          "title": "游戏"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=9",
+          "title": "教育"
         }
       ],
       "theme": "offcanvas1"
@@ -108,17 +119,17 @@
       }
     },
 
-    gallery: {
-      "options": {
-        "cols": 2,
-        "gallery": true
-      },
-      "content":
-                {% autoescape off %}
-                  {{ main_pic_news }}
-                {% endautoescape %}
+    // gallery: {
+    //   "options": {
+    //     "cols": 2,
+    //     "gallery": true
+    //   },
+    //   "content":
+    //             {% autoescape off %}
+    //               {{ main_pic_news }}
+    //             {% endautoescape %}
   
-    },
+    // },
 
     list2: {
       "content": {

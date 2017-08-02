@@ -59,15 +59,12 @@ class NewsSpider(scrapy.spiders.Spider):
         news = body['data']['news']
         for i in news:
             item = self.__make_item(i)
-            self.items.append(item)
+            yield item
 
         if(self.page < 50 and hasmore):
             self.page = self.page + 1
             yield self.make_requests_from_url(
                 self.start_urls[0])
-        else:
-            for i in self.items:
-                yield i
 
     def __make_item(self, i):
         title = i['title']
