@@ -44,6 +44,7 @@
   var template = Handlebars.compile(source);
   var data = {
     header: {
+      "className": "am-header-fixed",
       "content": {
         "title": "明知"
       }
@@ -53,39 +54,62 @@
       "options": {
         "cols": "1"
       },
-
       "content": [
         {
-          "link": "{% url 'newslist' %}?b_type=1",
-          "title": "互联网",
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=2",
+          "link": "{% url 'newslist' %}?b_type=0",
           "title": "体育",
         },
         {
+          "link": "{% url 'newslist' %}?b_type=1",
+          "title": "教育",
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=2",
+          "title": "财经",
+        },
+        {
           "link": "{% url 'newslist' %}?b_type=3",
-          "title": "娱乐",
+          "title": "社会",
         },
         {
           "link": "{% url 'newslist' %}?b_type=4",
-          "title": "房产",
+          "title": "娱乐"
         },
         {
           "link": "{% url 'newslist' %}?b_type=5",
-          "title": "汽车"
+          "title": "军事"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=6",
+          "title": "国内"
         },
         {
           "link": "{% url 'newslist' %}?b_type=7",
-          "title": "财经"
+          "title": "科技"
         },
         {
           "link": "{% url 'newslist' %}?b_type=8",
-          "title": "游戏"
+          "title": "互联网"
         },
         {
           "link": "{% url 'newslist' %}?b_type=9",
-          "title": "教育"
+          "title": "房产"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=10",
+          "title": "国际"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=11",
+          "title": "女人"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=12",
+          "title": "汽车"
+        },
+        {
+          "link": "{% url 'newslist' %}?b_type=13",
+          "title": "游戏"
         }
       ],
       "theme": "offcanvas1"
@@ -180,5 +204,13 @@
    })
    */
 </script>
+<style>
+.am-menu-toggle-icon{
+    position: fixed;
+}
+::-webkit-scrollbar{
+  display:none;
+}
+</style>
 </body>
 </html>

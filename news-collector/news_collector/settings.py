@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'news_center',
 )
 
@@ -64,10 +65,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         # Or path to database file if using sqlite3.
         'NAME': 'news_center',
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
+        'USER': 'liurz',                      # Not used with sqlite3.
+        'PASSWORD': 'lrz4119*',                  # Not used with sqlite3.
         # Set to empty string for localhost. Not used with sqlite3.
-        'HOST': '',
+        'HOST': '120.25.173.16',
         # Set to empty string for default. Not used with sqlite3.
         'PORT': '',
     }
@@ -123,3 +124,11 @@ NEWS_SPIDER = ''
 NEWS_CLASSIFIER = ''
 
 DICT_PATH = '/cygdrive/c/Users/liurunze/Desktop/tomorrow-news/news-collector/news_classifiers/textGroceryClassifier/dict'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}

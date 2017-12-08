@@ -60,9 +60,9 @@
   <header data-am-widget="header"
           class="am-header am-header-default">
       <div class="am-header-left am-header-nav">
-          <a href="#left-link" class="">
-                <i class="am-header-icon am-icon-home"></i>
-          </a>
+        <a id="back" href="javascript:void(0)" class="" onclick="window.history.go(-1)">
+            <i class="am-header-icon am-icon-chevron-left"></i>
+        </a>
       </div>
 
       <h1 class="am-header-title">
@@ -143,7 +143,7 @@
 <script type="text/x-handlebars-template" id="tpi-list-item">
   {% templatetag openvariable %}#each this{% templatetag closevariable %}
   <li class="am-list-item-desced" data-id="{% templatetag openvariable %}id{% templatetag closevariable %}</a>">
-    <a class="needClick" href="{% templatetag openvariable %}link{% templatetag closevariable %}" class="am-list-item-hd" target="view_window">
+    <a class="needClick" href="{% templatetag openvariable %}link{% templatetag closevariable %}" class="am-list-item-hd">
     {% templatetag openvariable %}title{% templatetag closevariable %}</a>
 
     <div class="am-list-item-text">{% templatetag openvariable %}desc{% templatetag closevariable %}</div>

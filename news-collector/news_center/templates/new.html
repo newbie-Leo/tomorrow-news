@@ -18,10 +18,10 @@
 
 <div class="page pg-demo">
 <header data-am-widget="header"
-          class="am-header am-header-default">
+          class="am-header am-header-default am-header-fixed">
       <div class="am-header-left am-header-nav">
-        <a href="{% url 'index' %}" class="">
-            <i class="am-header-icon am-icon-home"></i>
+        <a id="back" href="javascript:void(0)" class="" onclick="window.history.go(-1)">
+            <i class="am-header-icon am-icon-chevron-left"></i>
         </a>
       </div>
       <h1 class="am-header-title">
@@ -31,7 +31,7 @@
       </h1>
   </header>
   
-  <div id="demo-view" data-backend-compiled>
+  <div id="demo-view" data-backend-compiled style="margin-top:5rem">
         
       <article data-am-widget="paragraph"
            class="am-paragraph am-paragraph-default"

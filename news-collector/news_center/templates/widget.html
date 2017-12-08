@@ -11,8 +11,8 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
   <link rel="icon" type="image/png" href="assets/i/favicon.png">
-  <link rel="stylesheet" href="assets/css/amazeui.min.css">
-  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/amazeui/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/amazeui/css/app.css">
 </head>
 <body>
 <!--[if lte IE 9]>
@@ -22,27 +22,26 @@
 <![endif]-->
 
 <script type="text/x-handlebars-template" id="amz-tpl">
-  {{>header header}}
 
-  {{>menu menu}}
+  {% templatetag openvariable %}>header header{% templatetag closevariable %}
 
-  {{>slider slider}}
+  {% templatetag openvariable %}>menu menu{% templatetag closevariable %}
 
-  {{>list_news list1}}
+  {% templatetag openvariable %}>list_news list1{% templatetag closevariable %}
 
-  {{>gallery gallery}}
+  {% templatetag openvariable %}>gallery gallery{% templatetag closevariable %}
 
-  {{>list_news list2}}
+  {% templatetag openvariable %}>list_news list2{% templatetag closevariable %}
 
-  {{>footer footer}}
+  {% templatetag openvariable %}>footer footer{% templatetag closevariable %}
 
-  {{>navbar navbar}}
+  {% templatetag openvariable %}>navbar navbar{% templatetag closevariable %}
 </script>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/amazeui.js"></script>
-<script src="assets/js/handlebars.min.js"></script>
-<script src="assets/js/amazeui.widgets.helper.js"></script>
+<script src="assets/amazeui/js/jquery.min.js"></script>
+<script src="assets/amazeui/js/amazeui.js"></script>
+<script src="assets/amazeui/js/handlebars.min.js"></script>
+<script src="assets/amazeui/js/amazeui.widgets.helper.js"></script>
 <script>
   var $tpl = $('#amz-tpl');
   var source = $tpl.text();

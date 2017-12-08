@@ -9,6 +9,9 @@ from util import translateImg, translateTitle
 # Create your views here.
 
 
+def index1(request):
+    return render_to_response('widget.html')
+
 def index(request):
     # 获取有图头条
     main_news = News.getMainNews(request)
