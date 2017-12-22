@@ -11,7 +11,7 @@ WEB https://github.com/django/django
 
 内容提取 https://github.com/grangier/python-goose
 
-文本分类 https://github.com/salestock/fastText.py/
+文本分类 https://github.com/facebookresearch/fastText
 
 
 中文文本分类数据集THUCNews:
