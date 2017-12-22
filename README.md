@@ -3,13 +3,20 @@
 
 涉及框架：
 
-https://github.com/django/django
+WEB https://github.com/django/django
 
-https://github.com/scrapy/scrapy
+爬虫 https://github.com/scrapy/scrapy
 
-https://github.com/amazeui/amazeui
+前端 https://github.com/amazeui/amazeui
 
-https://github.com/grangier/python-goose
+内容提取 https://github.com/grangier/python-goose
+
+文本分类 https://github.com/salestock/fastText.py/
+
+
+中文文本分类数据集THUCNews:
+
+http://thuctc.thunlp.org/
 
 预览地址：
 
