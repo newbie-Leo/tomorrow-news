@@ -1,0 +1,13 @@
+    <div class="am-offcanvas">
+      <div class="am-offcanvas-bar am-offcanvas-bar-flip">
+
+      <ul class="am-menu-nav am-avg-sm-3">
+            {% for m in menus %}
+            <li class="">
+              <a href="{% url 'newslist' %}?b_type={{ m.type }}" class="">{{ m.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+      </div>
+    </div>

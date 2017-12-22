@@ -1,5 +1,6 @@
 # coding: utf8
 from django.db import models
+from django.db.models import Count
 from datetime import datetime
 from util import translateImg
 from decorators import dynamic_news_decoder
@@ -78,13 +79,14 @@ class News(models.Model):
         if start == 0:
             start = request.session.get(
                 b_type + "last_start", 0)
-        # query = {"n_date": datetime.today()}
-        query = {}
+        query = {"n_date": datetime.today()}
         if b_type:
             query["b_type"] = int(b_type)
         news = cls.objects.filter(**query)[
             start: start + count]
         count = cls.objects.all().count()
+        # print news
+        # print query
         request.session[b_type + "last_start"] = start
         return news, count, start
 
@@ -93,6 +95,14 @@ class News(models.Model):
         slideshows = NewsContent.objects.select_related().filter(
             content_img__isnull=False, news__n_date=datetime.today())[0:4]
         return [c.news for c in slideshows]
+
+    @classmethod
+    def getMenus(cls):
+        menus = cls.objects.filter(
+            n_date=datetime.today()).values_list(
+            'b_type').annotate(counts=Count('id')).filter(counts__gt=0)
+
+        return menus
 
 
 class NewsContent(models.Model):

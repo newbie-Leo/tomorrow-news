@@ -1,3 +1,4 @@
+{% load news_extras %}
 <!doctype html>
 <html class="no-js">
 <head>
@@ -31,7 +32,6 @@
 
   {% templatetag openvariable %}>list_news list2{% templatetag closevariable %}
 
-  {% templatetag openvariable %}>navbar navbar{% templatetag closevariable %}
 </script>
 
 <script src="assets/amazeui/js/jquery.min.js"></script>
@@ -52,67 +52,11 @@
 
     menu: {
       "options": {
-        "cols": "1"
+        "cols": "3",
+        "offCanvasFlip": true,
       },
-      "content": [
-        {
-          "link": "{% url 'newslist' %}?b_type=0",
-          "title": "体育",
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=1",
-          "title": "教育",
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=2",
-          "title": "财经",
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=3",
-          "title": "社会",
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=4",
-          "title": "娱乐"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=5",
-          "title": "军事"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=6",
-          "title": "国内"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=7",
-          "title": "科技"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=8",
-          "title": "互联网"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=9",
-          "title": "房产"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=10",
-          "title": "国际"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=11",
-          "title": "女人"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=12",
-          "title": "汽车"
-        },
-        {
-          "link": "{% url 'newslist' %}?b_type=13",
-          "title": "游戏"
-        }
-      ],
-      "theme": "offcanvas1"
+      "content": {% autoescape off %} {% menu_json %} {% endautoescape %},
+      "theme": "offcanvas2"
     },
 
 

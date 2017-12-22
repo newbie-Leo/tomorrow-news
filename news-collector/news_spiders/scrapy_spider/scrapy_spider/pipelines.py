@@ -4,6 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+from datetime import datetime, timedelta
 from goose import Goose
 from goose.text import StopWordsChinese
 from lxml import etree
@@ -20,6 +21,18 @@ class DuplicatesTitlePipeline(object):
             return item
         else:
             raise DropItem(u"标题重复 %s" % item)
+
+
+class PublishDatePipeline(object):
+
+    def process_item(self, item, spider):
+        ts = item['ts']
+        tomorrow = datetime.today() + timedelta(days=1)
+        passed = tomorrow - datetime.fromtimestamp(ts)
+        if passed.days >= 365:
+            raise DropItem(u"新闻不符 %s" % item)
+        else:
+            return item
 
 
 class SaveModelPipeline(object):
