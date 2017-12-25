@@ -2,7 +2,7 @@
 from django.db import models
 from django.db.models import Count
 from datetime import datetime
-from util import translateImg
+from util import transform_img, get_tomorrow
 from decorators import dynamic_news_decoder
 # Create your models here.
 
@@ -46,35 +46,35 @@ class News(models.Model):
 
     @classmethod
     @dynamic_news_decoder
-    def getMainNews(cls, request, last_readed=0):
+    def get_main_news(cls, request, last_readed=0):
         # TODO 筛选头条新闻（有图）
         news = cls.objects.filter(
-            n_date=datetime.today(),
+            n_date=get_tomorrow(),
             id__gt=last_readed).exclude(imageurls='[]')[0:9]
 
         return news
 
     @classmethod
-    def getPicMainNews(cls, request):
+    def get_pic_main_news(cls, request):
         last_readed = request.session.get("last_readed", 0)
 
         # TODO 筛选头条新闻（有图）
         news = cls.objects.filter(
-            n_date=datetime.today(), id__gte=last_readed).exclude(imageurls='[]')[9:13]
+            n_date=get_tomorrow(), id__gte=last_readed).exclude(imageurls='[]')[9:13]
 
         print news
         return news
 
     @classmethod
     @dynamic_news_decoder
-    def getNoPicMainNews(cls, request, last_readed=0):
+    def get_no_pic_main_news(cls, request, last_readed=0):
         # TODO 筛选头条新闻（无图）
-        news = cls.objects.filter(n_date=datetime.today(),
+        news = cls.objects.filter(n_date=get_tomorrow(),
                                   id__gt=last_readed, imageurls='[]')[0:9]
         return news
 
     @classmethod
-    def getNewsList(cls, request, start=0, count=10, type=None):
+    def get_news_list(cls, request, start=0, count=10, type=None):
         b_type = request.GET.get("b_type")
         if start == 0:
             start = request.session.get(
@@ -91,13 +91,7 @@ class News(models.Model):
         return news, count, start
 
     @classmethod
-    def getSlideshow(cls):
-        slideshows = NewsContent.objects.select_related().filter(
-            content_img__isnull=False, news__n_date=datetime.today())[0:4]
-        return [c.news for c in slideshows]
-
-    @classmethod
-    def getMenus(cls):
+    def get_menus(cls):
         menus = cls.objects.filter(
             n_date=datetime.today()).values_list(
             'b_type').annotate(counts=Count('id')).filter(counts__gt=0)
@@ -113,7 +107,7 @@ class NewsContent(models.Model):
 
     @property
     def jump_img(self):
-        return translateImg(self.content_img)
+        return transform_img(self.content_img)
 
     class Meta:
         db_table = 'news_content'

@@ -12,9 +12,8 @@ admin.autodiscover()
 urlpatterns = (
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index$', index, name='index'),
-    url(r'^index1$', index1, name='index'),
     url(r'^img$', img, name='img'),
-    url(r'^newslist$', newsList, name='newslist'),
+    url(r'^newslist$', news_list, name='newslist'),
     url(r'^news$', news, name='news'),
     url(r'^rest/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

@@ -11,7 +11,7 @@ register = template.Library()
 
 @register.simple_tag
 def menu_list():
-    menus = News.getMenus()
+    menus = News.get_menus()
     menus_data = [{"type": i[0], "name": dict(NEWS_TYPE_CHOICES)[i[0]]}
                   for i in menus]
     data = {"menus": menus_data}
@@ -21,8 +21,7 @@ def menu_list():
 
 @register.simple_tag
 def menu_json():
-    menus = News.getMenus()
-
+    menus = News.get_menus()
     menus_data = [{"link": "%s?b_type=%s" % (reverse("newslist"), i[0]),
                    "title": dict(NEWS_TYPE_CHOICES)[i[0]]}
                   for i in menus]

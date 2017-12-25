@@ -4,12 +4,12 @@ import json
 from datetime import datetime, timedelta
 
 
-def translateImg(imgurl):
+def transform_img(imgurl):
     url = '/img?url=%s' % urllib.quote(imgurl)
     return url
 
 
-def translateTitle(title):
+def transform_title(title):
     today = datetime.today()
     tomorrow = today + timedelta(days=1)
     month = tomorrow.month
@@ -23,12 +23,18 @@ def translateTitle(title):
         return title.replace(tomorrow_normal, u"明天")
 
 
-def newsQuerySetToJson(news):
+def get_tomorrow():
+    today = datetime.today()
+    tomorrow = today + timedelta(days=1)
+    return tomorrow
+
+
+def news_query_set_to_json(news):
     news_json = json.dumps([
         {
-            'title': translateTitle(i.title),
+            'title': transform_title(i.title),
             'link': i.url,
-            'img': translateImg(
+            'img': transform_img(
                 json.loads(
                     i.imageurls
                 )[0]['url'] if not i.imageurls == '[]' else ''),
