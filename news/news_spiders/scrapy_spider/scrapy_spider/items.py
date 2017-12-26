@@ -8,7 +8,7 @@
 import scrapy
 import django
 django.setup()
-from news_center.models import News
+from news_web.models import News
 
 
 class ScrapySpiderItem(scrapy.Item):

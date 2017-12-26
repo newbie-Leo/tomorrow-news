@@ -1,6 +1,6 @@
 # coding: utf8
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_collector.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_configs.settings")
 import django
 django.setup()
 
@@ -20,7 +20,7 @@ input_file = "/root/news-collector/news_classifiers/fasttext_classifier/news_fas
 # (Example text is from dbpedia.train)
 
 
-from news_center.models import News
+from news_web.models import News
 
 
 class FasttextClassifier(object):

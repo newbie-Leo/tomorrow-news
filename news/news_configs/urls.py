@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
-from news_center.views import *
+from news_web.views import *
 from rest_framework import routers
 from restapi import views
 

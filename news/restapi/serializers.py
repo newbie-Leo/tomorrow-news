@@ -1,4 +1,4 @@
-from news_center.models import News
+from news_web.models import News
 from rest_framework import serializers
 
 

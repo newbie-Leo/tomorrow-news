@@ -5,11 +5,13 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
 from goose import Goose
 from goose.text import StopWordsChinese
 from lxml import etree
 from scrapy.exceptions import DropItem
-from news_center.models import NewsContent, NewsSite
+from news_web.models import NewsContent, NewsSite
+from news_web.util import get_tomorrow
 
 
 class DuplicatesTitlePipeline(object):
@@ -27,8 +29,8 @@ class PublishDatePipeline(object):
 
     def process_item(self, item, spider):
         ts = item['ts']
-        tomorrow = datetime.today() + timedelta(days=1)
-        passed = tomorrow - datetime.fromtimestamp(ts)
+        tomorrow = get_tomorrow()
+        passed = tomorrow - ts
         if passed.days >= 365:
             raise DropItem(u"新闻不符 %s" % item)
         else:
@@ -40,7 +42,8 @@ class SaveModelPipeline(object):
     def process_item(self, item, spider):
         if item:
             media_name = item['site']
-            item_media, _ = NewsSite.objects.get_or_create(site_name=media_name)
+            item_media, _ = NewsSite.objects.get_or_create(
+                site_name=media_name)
             item['b_type'] = item_media.site_type
             dbitem = item.saveModel()
             return dbitem
@@ -65,6 +68,10 @@ class GetContentPipeline(object):
                 raise DropItem(u"无法获取内容 %s" % item)
 
             content = etree.tostring(article.top_node)
+            text = BeautifulSoup(content).getText()
+            if len(text) < 100:
+                item.delete()
+                raise DropItem(u"获取内容太短 %s" % item)
             new_content.content = content
             try:
                 img = article.top_image.src

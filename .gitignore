@@ -1,3 +1,4 @@
 /news-collector/news_center/*.pyc
 *.pyc
 /news-collector/news_center/static/amazeui
+/news/news_web/static/amazeui

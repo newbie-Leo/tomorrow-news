@@ -6,7 +6,7 @@ import mimetypes
 mimetypes.types_map['.svg'] = 'image/svg+xml'
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_collector.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_configs.settings")
 
     from django.core.management import execute_from_command_line
 

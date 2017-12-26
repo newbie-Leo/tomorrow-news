@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta
 import scrapy
 from scrapy_spider.items import ScrapySpiderItem
+from news_web.util import get_tomorrow
 
 
 class NewsSpider(scrapy.spiders.Spider):
@@ -74,7 +75,7 @@ class NewsSpider(scrapy.spiders.Spider):
         ts = datetime.fromtimestamp(float(i['ts']) / 1000)
         imageurls = json.dumps(i['imageurls'])
         n_abs = i['abs']
-        n_date = datetime.now()
+        n_date = get_tomorrow()
 
         item = ScrapySpiderItem(title=title, url=url, nid=nid, site=site,
                                 ts=ts, imageurls=imageurls, n_abs=n_abs,

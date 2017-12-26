@@ -79,9 +79,10 @@ class News(models.Model):
         if start == 0:
             start = request.session.get(
                 b_type + "last_start", 0)
-        query = {"n_date": datetime.today()}
+        query = {"n_date": get_tomorrow()}
         if b_type:
             query["b_type"] = int(b_type)
+        print query
         news = cls.objects.filter(**query)[
             start: start + count]
         count = cls.objects.all().count()
@@ -93,7 +94,7 @@ class News(models.Model):
     @classmethod
     def get_menus(cls):
         menus = cls.objects.filter(
-            n_date=datetime.today()).values_list(
+            n_date=get_tomorrow()).values_list(
             'b_type').annotate(counts=Count('id')).filter(counts__gt=0)
 
         return menus

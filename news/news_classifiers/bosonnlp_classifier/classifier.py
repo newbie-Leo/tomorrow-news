@@ -1,13 +1,13 @@
 # coding: utf8
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_collector.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "news_configs.settings")
 import django
 django.setup()
 
-
+from bs4 import BeautifulSoup
 from django.conf import settings
 from bosonnlp import BosonNLP
-from news_center.models import News
+from news_web.models import News
 
 
 class BosonNLPClassifier(object):
@@ -15,8 +15,9 @@ class BosonNLPClassifier(object):
     nlp = BosonNLP(token)
 
     @staticmethod
-    def classifyOne(new):
+    def classify_one(new):
         try:
+            # content_text = BeautifulSoup(new.news_content.content).getText()
             btype = BosonNLPClassifier.nlp.classify(new.n_abs)[0]
             new.b_type = btype
             new.save()
@@ -27,7 +28,7 @@ class BosonNLPClassifier(object):
     def classify(**kvargs):
         news = News.objects.filter(b_type=None)
         for new in news:
-            BosonNLPClassifier.classifyOne(new)
+            BosonNLPClassifier.classify_one(new)
 
 
 if __name__ == '__main__':

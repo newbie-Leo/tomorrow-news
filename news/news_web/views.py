@@ -4,7 +4,7 @@ import requests
 from django.shortcuts import render_to_response
 from django.template.response import TemplateResponse
 from django.http import HttpResponse
-from news_center.models import News
+from news_web.models import News
 from util import transform_img, transform_title
 # Create your views here.
 

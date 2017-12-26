@@ -4,7 +4,7 @@ from django import template
 from django.template.loader import get_template
 from django.db.models import Count
 from django.urls import reverse
-from news_center.models import News, NEWS_TYPE_CHOICES
+from news_web.models import News, NEWS_TYPE_CHOICES
 
 register = template.Library()
 
