@@ -20,7 +20,7 @@ http://thuctc.thunlp.org/
 
 预览地址：
 
-![预览地址](https://github.com/newbie-Leo/tomorrow-news/blob/master/news-collector/news_center/static/img/url.png)
+![预览地址](https://github.com/newbie-Leo/tomorrow-news/blob/master/news/news_web/static/img/url.png)
 
 <b>TODO:</b>
 
