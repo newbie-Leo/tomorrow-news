@@ -74,7 +74,7 @@ class News(models.Model):
         return news
 
     @classmethod
-    def get_news_list(cls, request, start=0, count=10, type=None):
+    def get_news_list(cls, request, start=0, size=10, type=None):
         b_type = request.GET.get("b_type")
         if start == 0:
             start = request.session.get(
@@ -82,10 +82,10 @@ class News(models.Model):
         query = {"n_date": get_tomorrow()}
         if b_type:
             query["b_type"] = int(b_type)
-        print query
+
         news = cls.objects.filter(**query)[
-            start: start + count]
-        count = cls.objects.all().count()
+            start: start + size]
+        count = news.count()
         # print news
         # print query
         request.session[b_type + "last_start"] = start
@@ -94,7 +94,7 @@ class News(models.Model):
     @classmethod
     def get_menus(cls):
         menus = cls.objects.filter(
-            n_date=get_tomorrow()).values_list(
+            n_date=get_tomorrow()).exclude(b_type=None).values_list(
             'b_type').annotate(counts=Count('id')).filter(counts__gt=0)
 
         return menus

@@ -24,5 +24,5 @@ class ScrapySpiderItem(scrapy.Item):
     n_abs = scrapy.Field()
     n_date = scrapy.Field()
 
-    def saveModel(self):
+    def save_model(self):
         return News.objects.create(**dict(self))

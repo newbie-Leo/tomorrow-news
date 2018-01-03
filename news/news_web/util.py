@@ -29,20 +29,20 @@ def get_tomorrow():
     return tomorrow
 
 
+def new_to_dict(new):
+    new_dict = {
+        'title': transform_title(new.title),
+        'link': '/news?id=%s' % new.id,
+        'img': transform_img(
+            json.loads(
+                new.imageurls)[0]['url']
+            if not new.imageurls == '[]' else ''),
+        'desc': new.n_abs,
+        # 'date': new.ts.strftime('%Y-%m-%d')
+    }
+    return new_dict
+
+
 def news_query_set_to_json(news):
-    news_json = json.dumps([
-        {
-            'title': transform_title(i.title),
-            'link': i.url,
-            'img': transform_img(
-                json.loads(
-                    i.imageurls
-                )[0]['url'] if not i.imageurls == '[]' else ''),
-            'desc': i.n_abs,
-            'date': i.ts.strftime('%Y-%m-%d')
-        }
-
-        for i in news
-    ])
-
-    return news_json
+    news_dict = [new_to_dict(new) for new in news]
+    return json.dumps(news_dict)

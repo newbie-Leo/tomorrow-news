@@ -31,7 +31,7 @@ class PublishDatePipeline(object):
         ts = item['ts']
         tomorrow = get_tomorrow()
         passed = tomorrow - ts
-        if passed.days >= 365:
+        if passed.days >= 300:
             raise DropItem(u"新闻不符 %s" % item)
         else:
             return item
@@ -45,7 +45,7 @@ class SaveModelPipeline(object):
             item_media, _ = NewsSite.objects.get_or_create(
                 site_name=media_name)
             item['b_type'] = item_media.site_type
-            dbitem = item.saveModel()
+            dbitem = item.save_model()
             return dbitem
 
 

@@ -75,7 +75,9 @@ class NewsSpider(scrapy.spiders.Spider):
         ts = datetime.fromtimestamp(float(i['ts']) / 1000)
         imageurls = json.dumps(i['imageurls'])
         n_abs = i['abs']
-        n_date = get_tomorrow()
+        today = datetime.today()
+        tomorrow = today + timedelta(days=1)
+        n_date = tomorrow
 
         item = ScrapySpiderItem(title=title, url=url, nid=nid, site=site,
                                 ts=ts, imageurls=imageurls, n_abs=n_abs,
