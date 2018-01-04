@@ -1,7 +1,6 @@
 # coding: utf8
 from django.db import models
 from django.db.models import Count
-from datetime import datetime
 from util import transform_img, get_tomorrow
 from decorators import dynamic_news_decoder
 # Create your models here.
@@ -85,11 +84,14 @@ class News(models.Model):
 
         news = cls.objects.filter(**query)[
             start: start + size]
+        total = cls.objects.filter(**query).count()
         count = news.count()
-        # print news
-        # print query
+        if size > count:
+            add_news = cls.objects.filter(**query)[: size - count]
+            news = news.union(add_news)
+            start = size - count
         request.session[b_type + "last_start"] = start
-        return news, count, start
+        return news, total, start
 
     @classmethod
     def get_menus(cls):

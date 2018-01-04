@@ -67,7 +67,7 @@
       </div>
 
       <h1 class="am-header-title">
-          <a href="#title-link" class="">
+          <a href="{% url 'index' %}" class="">
             明知
           </a>
       </h1>
@@ -170,13 +170,15 @@
             _this.iScroll.refresh();
           }, 100);
 
+          if(data.total - start < data.count){
+              $(".pull-action").remove()
+          }
           console.log($(".needClick"));
           $(".needClick").click(function(){
               var url = $(this).attr("href");
               // location.target="view_window";
               // location.href=url;
               window.open(url);
-
           });
         }, function() {
           console.log('Error...')
