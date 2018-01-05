@@ -12,15 +12,27 @@ def transform_img(imgurl):
 def transform_title(title):
     today = datetime.today()
     tomorrow = today + timedelta(days=1)
+    year = tomorrow.year
     month = tomorrow.month
     day = tomorrow.day
     tomorrow_normal = u'%s月%s日' % (month, day)
     tomorrow_abnormal = tomorrow.strftime("%m月%d日").decode("utf8")
+    yaer_normal = u"%s年" % year
+    yaer_abnormal = u"明年"
 
+    tm_index = None
     if tomorrow_abnormal in title:
-        return title.replace(tomorrow_abnormal, u"明天")
+        tm_index = title.find(tomorrow_abnormal)
+        title = title.replace(tomorrow_abnormal, u"明天")
     else:
-        return title.replace(tomorrow_normal, u"明天")
+        tm_index = title.find(tomorrow_normal)
+        title = title.replace(tomorrow_normal, u"明天")
+    if not tm_index is None:
+        if title[tm_index - 5: tm_index] == yaer_normal:
+            title = title.replace(yaer_normal, u"")
+        elif title[tm_index - 2: tm_index] == yaer_abnormal:
+            title = title.replace(yaer_abnormal, u"")
+    return title
 
 
 def get_tomorrow():
